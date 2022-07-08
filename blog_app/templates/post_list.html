@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Post List-My Blog</title>
+{% endblock title %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            {% for post in post_list %}
+                <div class="col-lg-6 my-4">
+                        <div class="card shadow" style="width: 70rem;min-height:20rem;">
+                            <div class="card-body">
+                            <h3 class="posttitle loader">{{post.title}}<br><h6>by {{post.author}}</small></h6></h3>
+                                <p class="postcontent">{{ post.text|safe|linebreaksbr|truncatechars:300}}</p>
+                                <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-primary">Read More </a> 
+                        <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+                         <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-outline-info">Comments:{{ post.approve_comments.count }}</a>
+                </div>
+            </div>
+                {% endfor %}
+        </div>
+            
+    </div>
+    
+{% endblock %}

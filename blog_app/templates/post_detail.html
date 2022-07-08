@@ -1,0 +1,62 @@
+{%extends 'base.html'%}
+{%block content%}
+    <style>
+    .container {
+        box-shadow:10px 10px lightblue;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+    </style>      
+<div class='container w-75 mt-3'>
+    <div class="jumbotron">
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+        <br>
+        {% if post.published_date %}
+            <div class ="date postdate">
+                {{ post.pusblished_date }}
+            </div>
+
+        {%else%}
+            <a class="btn btn-outline-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+            <hr>
+        {%endif%}
+
+        <p class="postcontent">{{ post.text|safe|linebreaksbr }}</p>
+
+
+        
+            {% if user.is_authenticated %}
+                <div><a href="{% url 'post_edit' pk=post.pk %}"><span class='fa fa-edit' style='font-size:48px;color:green'></span></a>
+                <a class="" href="{% url 'post_remove' pk=post.pk %}"><span class='fa fa-remove' style='font-size:48px;color:red;border:2px;float:right;'></span></a></div>
+            {% endif %}
+
+
+
+        <hr>
+        <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    </div>
+
+  <div class="container-comment ">
+
+
+  {% for comment in post.comments.all %}
+  <br>
+      {% if user.is_authenticated or comment.approved_comment %}
+
+              {{ comment.created_date }}
+              {% if not comment.approved_comment %}
+                  <a class="btn btn-primary" href="{% url 'comment_remove' pk=comment.pk %}"><span class="fa fa-remove"></span></a>
+                  <a class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}"><span class="fa fa-check"></span></a>
+              {% endif %}
+
+          <p>{{ comment.text|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.author }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+</div>    
+{%endblock%}

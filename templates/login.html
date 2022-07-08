@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags%}
+
+{% block content %}
+<style>
+  .jumbotron {
+    box-shadow:10px 10px lightblue;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+</style>
+<div class="container">
+  <div class="jumbotron mt-5">
+
+    <h2>Please Login: </h2>
+    <h3>(Must be SuperUser, please check admin for issues.)</h3>
+    {% if form.errors %}
+        <p>Your username and password didn't match.Please try again!</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+        {{form.as_p}}
+        
+        <div><input type="submit" class='btn btn-success' value="Login" /></div>
+        <div><input type="hidden" name="next" value="{{ next }}" /></div>
+    </form>
+  </div>
+<div>  
+{% endblock %}

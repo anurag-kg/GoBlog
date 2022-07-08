@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Post Draft List-GoBlog</title>
+{% endblock title %}
+{% block content %}
+<div class="container w-75 mt-3">
+    <div class="container">
+        {% for post in post_list %}
+        <div class="col-lg-6 my-4">
+            <div class="card shadow" style="width: 70rem;height:20rem;">
+                <div class="card-body">
+                    <h3 class="posttitle loader">{{post.title}}<br><h6>by {{post.author}}</small></h6></h3>
+                    <p class="postcontent">{{post.text|truncatechars:100}}</p>
+                    <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-primary">Read More </a> 
+                    <p>Created on: {{ post.created_date|date:"D M Y"}}</p>
+                </div>
+            </div>        
+            {% endfor %}
+    </div>  
+{% endblock %}

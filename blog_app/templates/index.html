@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mt-5">
+    <div class="col-md-10 offset-md-1">
+        <center><p class="card-body-shadow text-primary display-4" style="border-radius:50px;">Welcome To GoBlog</p></center>
+        <center><a href="{% url "post_list" %}"><button type="submit" class="btn btn-warning btn-lg mt-3">Let's Get Started</button></a></center>
+    </div>    
+</div> 
+{% endblock  %}
